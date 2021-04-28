@@ -1,0 +1,9 @@
+[app]
+Key=your key (>=32chars)
+TempPath=./tmp
+SitePath=C:\doc\Projects\blog\public
+LogPath=./log
+
+[server]
+RunMode=release # or debug
+HttpPort=1848
