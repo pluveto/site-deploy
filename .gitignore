@@ -1,6 +1,8 @@
 dist/
 log/
 tmp/
+.vscode
 *.ini
 site-deploy.exe
 main.exe
+client
