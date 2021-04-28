@@ -35,6 +35,9 @@ func RemoveDirContents(dir string) error {
 		return err
 	}
 	for _, name := range names {
+		if strings.HasPrefix(name, ".") {
+			continue
+		}
 		err = os.RemoveAll(filepath.Join(dir, name))
 		if err != nil {
 			return err
