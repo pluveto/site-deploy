@@ -9,7 +9,7 @@ import (
 type App struct {
 	Key      string
 	TempPath string
-	LogPath string
+	LogPath  string
 	SitePath string
 }
 
