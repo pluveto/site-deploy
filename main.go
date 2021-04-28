@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
@@ -22,7 +21,6 @@ func init() {
 func main() {
 	gin.SetMode(setting.ServerSetting.RunMode)
 	routersInit := router.InitRouter()
-	fmt.Printf("%+v\n", setting.ServerSetting)
 	endPoint := fmt.Sprintf(":%d", setting.ServerSetting.HttpPort)
 
 	server := &http.Server{
@@ -30,7 +28,7 @@ func main() {
 		Handler: routersInit,
 	}
 
-	log.Printf("[info] start http server listening %s", endPoint)
+	glg.Infof("start http server listening %s", endPoint)
 
 	server.ListenAndServe()
 }
