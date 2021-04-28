@@ -4,41 +4,19 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/kpango/glg"
 	"github.com/pluveto/site-deploy/pkg/logger"
 	"github.com/pluveto/site-deploy/pkg/setting"
 	"github.com/pluveto/site-deploy/router"
 )
 
-// 单文件上传
-func fileUpload(context *gin.Context) {
-	file, err := context.FormFile("file")
-	if err != nil {
-		log.Println("ERROR: upload file failed. ", err)
-		context.JSON(http.StatusInternalServerError, gin.H{
-			"msg": fmt.Sprintf("ERROR: upload file failed. %s", err),
-		})
-	}
-	dst := "./tmp/" + file.Filename
-
-	err = context.SaveUploadedFile(file, dst)
-	if err != nil {
-		log.Println("ERROR: save file failed. ", err)
-		context.JSON(http.StatusInternalServerError, gin.H{
-			"msg": fmt.Sprintf("ERROR: save file failed. %s", err),
-		})
-	}
-	context.JSON(http.StatusOK, gin.H{
-		"status":  200,
-		"date":    nil,
-		"message": nil,
-	})
-}
-
 func init() {
-	setting.Setup()
 	logger.Setup()
+	firstUse()
+	setting.Setup()
 }
 
 func main() {
@@ -55,4 +33,14 @@ func main() {
 	log.Printf("[info] start http server listening %s", endPoint)
 
 	server.ListenAndServe()
+}
+
+func firstUse() {
+	_ = os.Mkdir("./tmp", os.ModeDir)
+	_ = os.Mkdir("./log", os.ModeDir)
+	_ = os.Mkdir("./conf", os.ModeDir)
+	if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
+		glg.Error("please configurate `conf/app.ini`")
+		os.Exit(1)
+	}
 }
