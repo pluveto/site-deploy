@@ -37,7 +37,7 @@ func firstUse() {
 	_ = os.Mkdir("./tmp", os.ModeDir)
 	_ = os.Mkdir("./log", os.ModeDir)
 	_ = os.Mkdir("./conf", os.ModeDir)
-	if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
+	if _, err := os.Stat("./conf/app.ini"); os.IsNotExist(err) {
 		glg.Error("please configurate `conf/app.ini`")
 		os.Exit(1)
 	}
